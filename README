@@ -9,6 +9,10 @@ To start user agent, activate virtualenv from MailUserAgent directory:
 	
 	source venv/bin/activate
 
+When finished, enter the following command to exit the virtualenv:
+
+	deactivate
+
 Then run script from MailUserAgent directory:
 
 	python run.py
