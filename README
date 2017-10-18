@@ -1,0 +1,44 @@
+Derek O'Brien
+dmo294@nyu.edu
+Data Communications & Networks - Fall 2017
+Programming Assignment #1 MailUserAgent
+Written in Python (3.6)
+
+Getting Started:
+To start user agent, activate virtualenv from MailUserAgent directory:
+	
+	source venv/bin/activate
+
+Then run script from MailUserAgent directory:
+
+	python run.py
+
+From there the user is provided with a simple menu of options to read/write messages.
+
+NOTE: The current implementation is hardcoded to work with the gmail mail serveronly. If you have a gmail account, you can login with your credentials and access your mail/send messages from your account.
+
+If you don't have a gmail account (or prefer not to use it), run the script with the default flag to use a test account.
+
+	python run.py -default
+
+
+Program Report:
+The user agent allows for previewing messages from a user's inbox (via IMAP) and sending messages (via SMTP). The user can scroll through their inbox 10 messages at a time and also move back and forth between message sets
+via simple user prompts.
+
+Messages can be drafted to be sent to multiple recipients, including cc/bcc recipients, by following the simple prompt for entering each element of the message. Messages sent to multiple recipients should be comma-separated. Users also have the opportunity to preview their message before deciding to send or cancel.
+
+
+Implementation:
+Python provides convenient libraries (smtplib and imaplib) that abstracts away all of the protocol and socket-level functionality. We also use the email library to package messages into a single message object for ease of handling.
+
+The MailClient class is the main user interface, which creates instances of the SMTPClient and IMAPClient that the logged in user can utilized to send/read messages, respectively. This class accepts simple user inputs via the terminal. This client also uses a custom exception class that handles authorization errors in both IMAP and SMTP. Those protocol-specific errors are caught and handled in their specific clients, but each raise a new custom error that is handled in the main user interface of MailClient.
+
+Default settings are saved in config.py and can be overridden via client constructors, but I've elected to leave that custom functionality unavailable for the moment. If support for multiple hosts/ports was supported, these would be passed in as command line arguments and handled accordingly.
+
+Enhancements:
+The user-agent uses TLS/SSL encryption by default for its SMTP/IMAP clients to ensure that messages are securely transmitted. If the user opts to not use TLS/SSL (assuming their mail server supports this) then the client will make a STARTTLS request to the serve to switch to a secure TLS connection.
+
+The SMTP client also supports the Enhanced SMTP (ESMTP) protocol extensions. The client will attempt to open a transmission with the EHLO command and fall back to HELO if EHLO is not supported.
+
+The user inbox is limited to a configurable max_display count to limit the request size when viewing inbox messages. This can be changed within the config file, but the default is set to 10. This saves considerable network bandwidth and client-side processing by not requesting the entirety of a user's inbox and only handling a small set of message fetch requests to ensure client responsiveness.
