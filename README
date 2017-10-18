@@ -23,8 +23,7 @@ If you don't have a gmail account (or prefer not to use it), run the script with
 
 
 Program Report:
-The user agent allows for previewing messages from a user's inbox (via IMAP) and sending messages (via SMTP). The user can scroll through their inbox 10 messages at a time and also move back and forth between message sets
-via simple user prompts.
+The user agent allows for previewing messages from a user's inbox (via IMAP) and sending messages (via SMTP). The user can scroll through their inbox 10 messages at a time and also move back and forth between message sets via simple user prompts.
 
 Messages can be drafted to be sent to multiple recipients, including cc/bcc recipients, by following the simple prompt for entering each element of the message. Messages sent to multiple recipients should be comma-separated. Users also have the opportunity to preview their message before deciding to send or cancel.
 
